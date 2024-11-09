@@ -244,7 +244,29 @@ public class MenuCreator {
 		return loadF;
 	}
 
-
+	private static JMenu createFileMenu(JFrame frame, ActionListener actionListener, AFPChain afpChain, MultipleAlignment msa) {
+		JMenu file = new JMenu("File");
+		file.getAccessibleContext().setAccessibleDescription("File Menu");
+	
+		ImageIcon saveIcon = createImageIcon("/icons/filesave.png");
+		JMenuItem saveF = (saveIcon != null) ? new JMenuItem("Save text display", saveIcon) : new JMenuItem("Save text display");
+		saveF.setMnemonic(KeyEvent.VK_S);
+		MySaveFileListener listener = new MySaveFileListener(afpChain, msa);
+		listener.setTextOutput(true);
+		saveF.addActionListener(listener);
+		file.add(saveF);
+		file.addSeparator();
+	
+		JMenuItem print = getPrintMenuItem();
+		print.addActionListener(actionListener);
+		file.add(print);
+		file.addSeparator();
+	
+		file.add(MenuCreator.getCloseMenuItem(frame));
+		file.add(MenuCreator.getExitMenuItem());
+	
+		return file;
+	}	
 	/**
 	 * Create the menu for the Alignment Panel representation of
 	 * Structural Alignments. The alignment can be in AFPChain format
@@ -261,38 +283,7 @@ public class MenuCreator {
 			MultipleAlignment msa){
 
 		JMenuBar menu = new JMenuBar();
-
-		JMenu file= new JMenu("File");
-		file.getAccessibleContext().setAccessibleDescription("File Menu");
-		menu.add(file);
-
-		ImageIcon saveicon = createImageIcon("/icons/filesave.png");
-
-		JMenuItem saveF = null;
-
-		if (saveicon != null)
-			saveF = new JMenuItem("Save text display", saveicon);
-		else
-			saveF = new JMenuItem("Save text display");
-
-		saveF.setMnemonic(KeyEvent.VK_S);
-		MySaveFileListener listener = new MySaveFileListener(afpChain, msa);
-		listener.setTextOutput(true);
-		saveF.addActionListener(listener);
-		file.add(saveF);
-
-		file.addSeparator();
-
-		JMenuItem print = getPrintMenuItem();
-		print.addActionListener(actionListener);
-		file.add(print);
-
-		file.addSeparator();
-
-		JMenuItem closeI = MenuCreator.getCloseMenuItem(frame);
-		file.add(closeI);
-		JMenuItem exitI = MenuCreator.getExitMenuItem();
-		file.add(exitI);
+		menu.add(createFileMenu(frame, actionListener, afpChain, msa));
 
 		JMenu edit = new JMenu("Edit");
 		edit.setMnemonic(KeyEvent.VK_E);
@@ -356,38 +347,7 @@ public class MenuCreator {
 			MultipleAlignment msa){
 
 		JMenuBar menu = new JMenuBar();
-
-		JMenu file= new JMenu("File");
-		file.getAccessibleContext().setAccessibleDescription("File Menu");
-		menu.add(file);
-
-		ImageIcon saveicon = createImageIcon("/icons/filesave.png");
-
-		JMenuItem saveF = null;
-
-		if (saveicon != null )
-			saveF = new JMenuItem("Save text display", saveicon);
-		else
-			saveF = new JMenuItem("Save text display");
-
-		saveF.setMnemonic(KeyEvent.VK_S);
-		MySaveFileListener listener =
-				new MySaveFileListener(afpChain, msa);
-		listener.setTextOutput(true);
-		saveF.addActionListener(listener);
-		file.add(saveF);
-		file.addSeparator();
-
-		JMenuItem print = getPrintMenuItem();
-		print.addActionListener(actionListener);
-		file.add(print);
-
-		file.addSeparator();
-
-		JMenuItem closeI = MenuCreator.getCloseMenuItem(frame);
-		file.add(closeI);
-		JMenuItem exitI = MenuCreator.getExitMenuItem();
-		file.add(exitI);
+		menu.add(createFileMenu(frame, actionListener, afpChain, msa));
 
 		JMenu view= new JMenu("View");
 		view.getAccessibleContext().setAccessibleDescription("View Menu");
