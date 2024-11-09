@@ -281,6 +281,7 @@ public class WorkSheet {
 	}
 
 	private void shuffleValuesInColumn(ArrayList<String> rows, String column) throws Exception {
+		doubleValues.clear();
 		ArrayList<Integer> rowIndex = new ArrayList<>();
 		for (int i = 0; i < rows.size(); i++) {
 			rowIndex.add(i);
@@ -308,7 +309,6 @@ public class WorkSheet {
 	 * @throws Exception
 	 */
 	public void shuffleColumnsAndThenRows(ArrayList<String> columns, ArrayList<String> rows) throws Exception {
-		doubleValues.clear();
 
 		for (String column : columns) { //shuffle all values in the column
 			shuffleValuesInColumn(rows, column);
@@ -345,7 +345,6 @@ public class WorkSheet {
 	 * @throws Exception
 	 */
 	public void shuffleColumnValues(ArrayList<String> columns) throws Exception {
-		doubleValues.clear();
 		ArrayList<String> rows = this.getDataRows();
 		for (String column : columns) { //shuffle all values in the column
 			shuffleValuesInColumn(rows, column);
