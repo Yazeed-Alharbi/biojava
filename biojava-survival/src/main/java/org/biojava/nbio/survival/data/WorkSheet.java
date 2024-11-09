@@ -280,6 +280,25 @@ public class WorkSheet {
 		return dataColumns;
 	}
 
+	private void shuffleValuesInColumn(ArrayList<String> rows, String column) throws Exception {
+		ArrayList<Integer> rowIndex = new ArrayList<>();
+		for (int i = 0; i < rows.size(); i++) {
+			rowIndex.add(i);
+		}
+		Collections.shuffle(rowIndex);
+	
+		for (int i = 0; i < rows.size(); i++) {
+			String row = rows.get(i);
+			int randomIndex = rowIndex.get(i);
+			String destinationRow = rows.get(randomIndex);
+	
+			String temp = this.getCell(destinationRow, column);
+			String value = this.getCell(row, column);
+			this.addCell(destinationRow, column, value);
+			this.addCell(row, column, temp);
+		}
+	}
+	
 	/**
 	 * Randomly shuffle the columns and rows. Should be constrained to the same
 	 * data type if not probably doesn't make any sense.
@@ -292,22 +311,7 @@ public class WorkSheet {
 		doubleValues.clear();
 
 		for (String column : columns) { //shuffle all values in the column
-			ArrayList<Integer> rowIndex = new ArrayList<>();
-			for (int i = 0; i < rows.size(); i++) {
-				rowIndex.add(i);
-			}
-			Collections.shuffle(rowIndex);
-			for (int i = 0; i < rows.size(); i++) {
-				String row = rows.get(i);
-				int randomIndex = rowIndex.get(i);
-				String destinationRow = rows.get(randomIndex);
-
-
-				String temp = this.getCell(destinationRow, column);
-				String value = this.getCell(row, column);
-				this.addCell(destinationRow, column, value);
-				this.addCell(row, column, temp);
-			}
+			shuffleValuesInColumn(rows, column);
 		}
 
 		for (String row : rows) {
@@ -344,22 +348,7 @@ public class WorkSheet {
 		doubleValues.clear();
 		ArrayList<String> rows = this.getDataRows();
 		for (String column : columns) { //shuffle all values in the column
-			ArrayList<Integer> rowIndex = new ArrayList<>();
-			for (int i = 0; i < rows.size(); i++) {
-				rowIndex.add(i);
-			}
-			Collections.shuffle(rowIndex);
-			for (int i = 0; i < rows.size(); i++) {
-				String row = rows.get(i);
-				int randomIndex = rowIndex.get(i);
-				String destinationRow = rows.get(randomIndex);
-
-
-				String temp = this.getCell(destinationRow, column);
-				String value = this.getCell(row, column);
-				this.addCell(destinationRow, column, value);
-				this.addCell(row, column, temp);
-			}
+			shuffleValuesInColumn(rows, column);
 		}
 
 	}
